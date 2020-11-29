@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import '../Styles/App.css'
-import ModifierInput from '../Components/ModifierInput'
 import Slot from '../Components/Slot'
+import config from '../config'
+
+// Components
+import ModifierInput from '../Components/ModifierInput'
+import FileManagement from '../Components/FileManagement'
 
 function App () {
   const [strMod, setStrMod] = useState(0)
@@ -51,26 +55,22 @@ function App () {
     }
   }
 
-  const addItem = (type, item, index) => {
+  const addItem = (type, item, slotIndex) => {
     let tempInventory = [...inventory]
-    let tempSlot = inventory.find((data) => data.type === type)
+    let selectedSlot = inventory.find((data) => data.type === type)
     let selectedInventoryIndex = inventory.findIndex((data) => data.type === type)
-    let tempItem = { ...tempSlot.slots[index] }
+    let tempItem = { ...selectedSlot.slots[slotIndex] }
     let tempItemArr = [...tempItem.item]
-    tempItemArr[tempItemArr.length - 1] = item
+    tempItemArr.push(item)
     tempItem.item = tempItemArr
-    tempSlot.slots[index] = tempItem
-    tempInventory[selectedInventoryIndex] = tempSlot
+    selectedSlot.slots[slotIndex] = tempItem
+    tempInventory[selectedInventoryIndex] = selectedSlot
     setInventory(tempInventory)
   }
 
   const addNewSlot = (type) => {
     let newSlot = {
-      'item': [
-        {
-          'name': ''
-        }
-      ]
+      'item': []
     }
     let tempInventory = [...inventory]
     let selectedSlot = tempInventory.find((data) => (data.type === type))
@@ -78,9 +78,74 @@ function App () {
     setInventory(tempInventory)
   }
 
+  const deleteItem = (itemIndex, type, slotIndex) => {
+    let tempInventory = [...inventory]
+    let selectedSlot = inventory.find((data) => data.type === type)
+    let selectedInventoryIndex = inventory.findIndex((data) => data.type === type)
+    let tempItem = { ...selectedSlot.slots[slotIndex] }
+    let tempItemArr = [...tempItem.item]
+    tempItemArr.splice(itemIndex, 1)
+    tempItem.item = tempItemArr
+    selectedSlot.slots[slotIndex] = tempItem
+    tempInventory[selectedInventoryIndex] = selectedSlot
+    setInventory(tempInventory)
+  }
+
+  const editItem = (type, item, slotIndex, itemIndex) => {
+    let tempInventory = [...inventory]
+    let selectedSlot = inventory.find((data) => data.type === type)
+    let selectedInventoryIndex = inventory.findIndex((data) => data.type === type)
+    let tempItem = { ...selectedSlot.slots[slotIndex] }
+    let tempItemArr = [...tempItem.item]
+    tempItemArr[itemIndex] = item
+    tempItem.item = tempItemArr
+    selectedSlot.slots[slotIndex] = tempItem
+    tempInventory[selectedInventoryIndex] = selectedSlot
+    setInventory(tempInventory)
+  }
+
+  const downloadTxtFile = () => {
+    const element = document.createElement('a')
+    let exportData = {
+      data: {
+        str_mod: strMod,
+        inventory
+      }
+    }
+    let data = JSON.stringify(exportData)
+    const file = new Blob([data], { type: 'text/plain' })
+    element.href = URL.createObjectURL(file)
+    element.download = 'myFile.txt'
+    document.body.appendChild(element) // Required for this to work in FireFox
+    element.click()
+  }
+
+  const setupData = (data) => {
+    changeStrMod(data.data.str_mod)
+    setInventory(data.data.inventory)
+  }
+
+  const removeSlot = (slotIndex, type) => {
+    let tempInventory = [...inventory]
+    let selectedSlot = inventory.find((data) => data.type === type)
+    let selectedInventoryIndex = inventory.findIndex((data) => data.type === type)
+    selectedSlot.slots.splice(slotIndex, 1)
+    tempInventory[selectedInventoryIndex] = selectedSlot
+    setInventory(tempInventory)
+  }
+
   return (
     <div className='padding-xs'>
-      <ModifierInput strMod={strMod} changeStrMod={changeStrMod} />
+      <div className='header border-bottom border-dark'>
+        <span>D&D Inventory Tracker</span>
+      </div>
+      <ModifierInput downloadTxtFile={downloadTxtFile} strMod={strMod} changeStrMod={changeStrMod} />
+      <div className='d-flex justify-content-center'>
+        <a class='btn btn-primary' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample'>Import / Export file</a>
+      </div>
+      <div class='collapse' id='collapseExample'>
+        <FileManagement setupData={setupData} />
+      </div>
       <h4 className='margin-top-s'>Inventory Slots</h4>
       <div className='col-md-12 margin-top-s row no-padding'>
         {inventory.map((slotData, index) => (
@@ -88,12 +153,18 @@ function App () {
             <Slot
               addItem={addItem}
               addNewSlot={addNewSlot}
+              deleteItem={deleteItem}
+              editItem={editItem}
+              removeSlot={removeSlot}
               slotData={slotData}
               maxSmall={maxSmall}
               maxMedium={maxMedium}
               maxLarge={maxLarge} />
           </div>
         ))}
+      </div>
+      <div className='footer'>
+        <span style={{ fontSize: 10 }}>Version {config.version}</span>
       </div>
     </div>
   )
