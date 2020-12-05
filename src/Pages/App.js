@@ -2,12 +2,15 @@ import { useState } from 'react'
 import '../Styles/App.css'
 import Slot from '../Components/Slot'
 import config from '../config'
+import Collapse from 'react-bootstrap/Collapse'
+import Button from 'react-bootstrap/Button'
 
 // Components
 import ModifierInput from '../Components/ModifierInput'
 import FileManagement from '../Components/FileManagement'
 
 function App () {
+  const [open, setOpen] = useState(false)
   const [strMod, setStrMod] = useState(0)
   const [maxSmall, setMaxSmall] = useState(5)
   const [maxMedium, setMaxMed] = useState(3)
@@ -141,11 +144,19 @@ function App () {
       </div>
       <ModifierInput downloadTxtFile={downloadTxtFile} strMod={strMod} changeStrMod={changeStrMod} />
       <div className='d-flex justify-content-center'>
-        <a class='btn btn-primary' data-toggle='collapse' href='#collapseExample' role='button' aria-expanded='false' aria-controls='collapseExample'>Import / Export file</a>
+        <Button
+          onClick={() => setOpen(!open)}
+          aria-controls='import-export-collapse'
+          aria-expanded={open}
+        >
+        Import / Export file
+        </Button>
       </div>
-      <div class='collapse' id='collapseExample'>
-        <FileManagement setupData={setupData} />
-      </div>
+      <Collapse in={open}>
+        <div id='import-export-collapse'>
+          <FileManagement setupData={setupData} />
+        </div>
+      </Collapse>
       <h4 className='margin-top-s'>Inventory Slots</h4>
       <div className='col-md-12 margin-top-s row no-padding'>
         {inventory.map((slotData, index) => (
