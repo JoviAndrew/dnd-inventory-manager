@@ -1,0 +1,80 @@
+@import '~antd/dist/antd.css';
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.footer {
+  margin-top: 10px;
+  padding: 10px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #e2e2e2;
+  position: fixed;
+}
+
+.header {
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.slot-container-small {
+  background-color: #f6df8f;
+  border-radius: 5px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.card-item {
+  border-bottom: solid 1px #FFFFFF;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.card-item .card-button {
+  visibility: hidden;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10;
+  transition: all 0.3s ease-in-out;
+}
+
+.card-item:hover .card-button{
+  visibility: visible;
+  opacity: 1;
+}
+
+.slot-button {
+  cursor: pointer;
+  border: solid 1px #FFFFFF;
+  border-radius: 5px;
+  width: 50%;
+}
+
+.slot {
+  overflow-y: scroll;
+  border: solid 1px #bfbfbf;
+  border-radius: 5px;
+  padding: 10px;
+  max-height: 300px;
+}
