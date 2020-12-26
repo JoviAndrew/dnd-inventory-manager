@@ -3,3 +3,7 @@
 * Able to add, delete, and update item into inventory slot
 * Able to add slots into inventory
 * Auto calculate maximum inventory slots from character strength modifier
+
+## v0.1.1
+
+* Bug fix unable to export file
