@@ -142,7 +142,7 @@ function App () {
       <div className='header border-bottom border-dark'>
         <span>D&D Inventory Tracker</span>
       </div>
-      <ModifierInput downloadTxtFile={downloadTxtFile} strMod={strMod} changeStrMod={changeStrMod} />
+      <ModifierInput strMod={strMod} changeStrMod={changeStrMod} />
       <div className='d-flex justify-content-center'>
         <Button
           onClick={() => setOpen(!open)}
@@ -154,7 +154,7 @@ function App () {
       </div>
       <Collapse in={open}>
         <div id='import-export-collapse'>
-          <FileManagement setupData={setupData} />
+          <FileManagement setupData={setupData} downloadTxtFile={downloadTxtFile} />
         </div>
       </Collapse>
       <h4 className='margin-top-s'>Inventory Slots</h4>
