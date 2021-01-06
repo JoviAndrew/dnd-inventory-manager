@@ -3,8 +3,8 @@ This is an unofficial fan made project to help tracking your DND character's inv
 
 ## Contact the Author (Luke Hart, DM Lair)
 
-**Email:** info@thedmlair.com
-**Twitter & Instagram:** @TheDMLair
+**Email:** info@thedmlair.com<br>
+**Twitter & Instagram:** @TheDMLair<br>
 **DM Lair Discord Server:** [https://discord.gg/Msat4NB](https://discord.gg/Msat4NB)
 
 

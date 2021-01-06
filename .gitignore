@@ -1,6 +1,12 @@
 # Local Settings
 .vscode
 
+# Build Folder
+/build
+
+# firebase
+/.firebase
+
 config.js
 /node_modules
 package-lock.json
