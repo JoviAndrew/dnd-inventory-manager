@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import '../Styles/App.css'
 import Slot from '../Components/Slot'
-// import config from '../config'
+import config from '../config/'
 import Collapse from 'react-bootstrap/Collapse'
 import Button from 'react-bootstrap/Button'
 
@@ -175,7 +175,7 @@ function App () {
         ))}
       </div>
       <div className='footer'>
-        <span style={{ fontSize: 10 }}>Version {/*config.version*/}</span>
+        <span style={{ fontSize: 10 }}>Version {config.version}</span>
       </div>
     </div>
   )
